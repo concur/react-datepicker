@@ -1,12 +1,16 @@
 import moment from 'moment'
 import React from 'react'
-import { isSameDay, isDayDisabled } from './date_utils'
+import { isSameDay, isDayDisabled, isSameUtcOffset } from './date_utils'
 
 var DateInput = React.createClass({
   displayName: 'DateInput',
 
   propTypes: {
+    // ##################################################
+    // ##  START custom code in concur fork
     allowInvalidDates: React.PropTypes.bool,
+    // ##  END custom code in concur fork
+    // ##################################################
     customInput: React.PropTypes.element,
     date: React.PropTypes.object,
     dateFormat: React.PropTypes.oneOfType([
@@ -22,6 +26,7 @@ var DateInput = React.createClass({
     minDate: React.PropTypes.object,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
+    onChangeRaw: React.PropTypes.func,
     onChangeDate: React.PropTypes.func
   },
 
@@ -32,11 +37,15 @@ var DateInput = React.createClass({
   },
 
   getInitialState () {
+    // ##################################################
+    // ##  START custom code in concur fork
     if (this.props.allowInvalidDates && !this.props.date) {
       return {
         value: ''
       }
     }
+    // ##  END custom code in concur fork
+    // ##################################################
 
     return {
       value: this.safeDateFormat(this.props)
@@ -45,14 +54,21 @@ var DateInput = React.createClass({
 
   componentWillReceiveProps (newProps) {
     if (!isSameDay(newProps.date, this.props.date) ||
+        !isSameUtcOffset(newProps.date, this.props.date) ||
           newProps.locale !== this.props.locale ||
           newProps.dateFormat !== this.props.dateFormat) {
+      // ##################################################
+      // ##  START custom code in concur fork
       this.updateState({
         value: this.safeDateFormat(newProps)
       })
+      // ##  END custom code in concur fork
+      // ##################################################
     }
   },
 
+  // ##################################################
+  // ##  START custom code in concur fork
   updateState (obj) {
     if (!this.props.allowInvalidDates) {
       return this.setState({value: obj.value})
@@ -62,37 +78,57 @@ var DateInput = React.createClass({
       this.setState({value: obj.value})
     }
   },
+  // ##  END custom code in concur fork
+  // ##################################################
 
   handleChange (event) {
+    // ##################################################
+    // ##  START custom code in concur fork
     if (this.props.allowInvalidDates) {
       this.updateState({value: event.target.value})
     } else if (this.props.onChange) {
       this.props.onChange(event)
     }
-
+    // ##  END custom code in concur fork
+    // ##################################################
+    if (this.props.onChangeRaw) {
+      this.props.onChangeRaw(event)
+    }
+    // ##################################################
+    // ##  START custom code in concur fork
     if (event.isDefaultPrevented && !event.isDefaultPrevented()) {
       this.handleChangeDate(event.target.value)
     }
+    // ##  END custom code in concur fork
+    // ##################################################
   },
 
   handleChangeDate (value) {
     if (this.props.onChangeDate) {
-      var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
-
-      if (!isDayDisabled(date, this.props)) {
+      var date = moment(value.trim(), this.props.dateFormat, this.props.locale || moment.locale(), true)
+      if (date.isValid() && !isDayDisabled(date, this.props)) {
         this.props.onChangeDate(date)
+      } else if (value === '') {
+        this.props.onChangeDate(null)
       }
     }
-
+    // ##################################################
+    // ##  START custom code in concur fork
     this.updateState({value})
+    // ##  END custom code in concur fork
+    // ##################################################
   },
 
+  // ##################################################
+  // ##  START custom code in concur fork
   safeDateFormat (props, value) {
     if (this.props.allowInvalidDates) {
       if (typeof props.date === 'string' || !props.date) {
         return value
       }
     }
+    // ##  END custom code in concur fork
+    // ##################################################
 
     return props.date && props.date.clone()
       .locale(props.locale || moment.locale())
@@ -100,10 +136,13 @@ var DateInput = React.createClass({
   },
 
   handleBlur (event) {
+    // ##################################################
+    // ##  START custom code in concur fork
     this.updateState({
       value: this.safeDateFormat(this.props)
     })
-
+    // ##  END custom code in concur fork
+    // ##################################################
     if (this.props.onBlur) {
       this.props.onBlur(event)
     }
@@ -114,7 +153,11 @@ var DateInput = React.createClass({
   },
 
   render () {
-    const { allowInvalidDates, customInput, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
+    // ##################################################
+    // ##  START custom code in concur fork
+    const { allowInvalidDates, customInput, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, onChangeRaw, ...rest } = this.props // eslint-disable-line no-unused-vars
+    // ##  END custom code in concur fork
+    // ##################################################
 
     if (customInput) {
       return React.cloneElement(customInput, {
@@ -124,15 +167,15 @@ var DateInput = React.createClass({
         onBlur: this.handleBlur,
         onChange: this.handleChange
       })
+    } else {
+      return <input
+          ref="input"
+          type="text"
+          {...rest}
+          value={this.state.value}
+          onBlur={this.handleBlur}
+          onChange={this.handleChange}/>
     }
-
-    return <input
-        ref="input"
-        type="text"
-        {...rest}
-        value={this.state.value}
-        onBlur={this.handleBlur}
-        onChange={this.handleChange} />
   }
 })
 
