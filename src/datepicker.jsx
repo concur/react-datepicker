@@ -19,11 +19,6 @@ var DatePicker = React.createClass({
   displayName: 'DatePicker',
 
   propTypes: {
-    // ##################################################
-    // ##  START custom code in concur fork
-    allowInvalidDates: React.PropTypes.bool,
-    // ##  END custom code in concur fork
-    // ##################################################
     autoComplete: React.PropTypes.string,
     autoFocus: React.PropTypes.bool,
     calendarClassName: React.PropTypes.string,
@@ -191,11 +186,7 @@ var DatePicker = React.createClass({
       return
     }
 
-    // ##################################################
-    // ##  START custom code in concur fork
-    if (!isSameDay(this.props.selected, changedDate) || this.props.allowInvalidDates) {
-    // ##  END custom code in concur fork
-    // ##################################################
+    if (!isSameDay(this.props.selected, changedDate)) {
       if (changedDate !== null) {
         if (this.props.selected) {
           changedDate = moment(changedDate).set({
@@ -209,19 +200,7 @@ var DatePicker = React.createClass({
         })
       }
 
-      // ##################################################
-      // ##  START custom code in concur fork
-      //  If the above moment.set() call returned a valid date, publish the new date object:
-      if (changedDate && changedDate.isValid()) {
-        this.props.onChange(changedDate, event)
-
-      //  Else the date *isn't* valid, but if we allow invalid dates to be entered
-      //  anyway, publish the change using a null value:
-      } else {
-        this.props.onChange(null, event)
-      }
-      // ##  END custom code in concur fork
-      // ##################################################
+      this.props.onChange(changedDate, event)
     }
   },
 
@@ -248,16 +227,7 @@ var DatePicker = React.createClass({
       }
       return
     }
-    // ##################################################
-    // ##  START custom code in concur fork
-    let copy = moment(this.state.preSelection)
-    //  If this is a keyboard event that changes the date AND the user-entered date is invalid, then change the date to the current date:
-    if (this.props.allowInvalidDates && ((event.key !== 'Enter') && (event.key !== 'Escape') && (event.key !== 'Tab') && (!copy || !copy.isValid()))) {
-      copy = moment()
-    }
-    // ##  END custom code in concur fork
-    // ##################################################
-
+    const copy = moment(this.state.preSelection)
     if (event.key === 'Enter') {
       event.preventDefault()
       this.handleSelect(copy, event)
@@ -358,15 +328,8 @@ var DatePicker = React.createClass({
     var className = classnames(this.props.className, {
       [outsideClickIgnoreClass]: this.state.open
     })
-    // ##################################################
-    // ##  START custom code in concur fork
-    // ##    the 'allowInvalidDates' attribute below
-    // ##    is the custom code
-    // ##  END custom code in concur fork
-    // ##################################################
     return <DateInput
         ref="input"
-        allowInvalidDates={this.props.allowInvalidDates}
         id={this.props.id}
         name={this.props.name}
         autoFocus={this.props.autoFocus}
