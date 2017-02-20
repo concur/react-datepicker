@@ -84,6 +84,7 @@ var DatePicker = React.createClass({
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
       disabled: false,
+      disableDateAutoCorrection: false,
       disabledKeyboardNavigation: false,
       dropdownMode: 'scroll',
       onFocus () {},

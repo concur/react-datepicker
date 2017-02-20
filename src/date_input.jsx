@@ -28,7 +28,8 @@ var DateInput = React.createClass({
 
   getDefaultProps () {
     return {
-      dateFormat: 'L'
+      dateFormat: 'L',
+      disableDateAutoCorrection: false
     }
   },
 

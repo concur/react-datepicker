@@ -3,7 +3,7 @@ import moment from 'moment'
 import DatePicker from 'react-datepicker'
 
 export default React.createClass({
-  displayName: 'Allow Invalid Dates',
+  displayName: 'Disable Date Auto Correction',
 
   getInitialState () {
     return {
