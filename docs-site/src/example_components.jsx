@@ -3,7 +3,7 @@ import hljs from 'highlight.js'
 import Default from './examples/default'
 import CodeExampleComponent from './code_example_component'
 
-import AllowInvalidDates from './examples/allow_invalid_dates'
+import DisableDateAutoCorrection from './examples/disable_date_auto_correction'
 import CustomDateFormat from './examples/custom_date_format'
 import CustomClassName from './examples/custom_class_name'
 import CustomCalendarClassName from './examples/custom_calendar_class_name'
@@ -53,8 +53,8 @@ export default React.createClass({
       component: <Default />
     },
     {
-      title: 'Allow invalid dates',
-      component: <AllowInvalidDates />
+      title: 'Disable date auto correction',
+      component: <DisableDateAutoCorrection />
     },
     {
       title: 'Custom date format',

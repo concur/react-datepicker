@@ -31,6 +31,7 @@ var DatePicker = React.createClass({
     ]),
     dateFormatCalendar: React.PropTypes.string,
     disabled: React.PropTypes.bool,
+    disableDateAutoCorrection: React.PropTypes.bool,
     disabledKeyboardNavigation: React.PropTypes.bool,
     dropdownMode: React.PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: React.PropTypes.object,
@@ -330,6 +331,7 @@ var DatePicker = React.createClass({
     })
     return <DateInput
         ref="input"
+        disableDateAutoCorrection={this.props.disableDateAutoCorrection}
         id={this.props.id}
         name={this.props.name}
         autoFocus={this.props.autoFocus}

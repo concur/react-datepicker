@@ -22,14 +22,14 @@ export default React.createClass({
       <pre className="column example__code">
         <code className="jsx">
           {'<DatePicker'}<br />
-              <strong>{'allowInvalidDates'}<br /></strong>
+              <strong>{'disableDateAutoCorrection'}<br /></strong>
               {'selected={this.state.startDate}'}<br />
               {'onChange={this.handleChange} />'}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            allowInvalidDates
+            disableDateAutoCorrection
             selected={this.state.startDate}
             onChange={this.handleChange} />
       </div>
