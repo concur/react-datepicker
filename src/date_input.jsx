@@ -6,11 +6,6 @@ var DateInput = React.createClass({
   displayName: 'DateInput',
 
   propTypes: {
-    // ##################################################
-    // ##  START custom code in concur fork
-    allowInvalidDates: React.PropTypes.bool,
-    // ##  END custom code in concur fork
-    // ##################################################
     customInput: React.PropTypes.element,
     date: React.PropTypes.object,
     dateFormat: React.PropTypes.oneOfType([
@@ -18,6 +13,7 @@ var DateInput = React.createClass({
       React.PropTypes.array
     ]),
     disabled: React.PropTypes.bool,
+    disableDateAutoCorrection: React.PropTypes.bool,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     includeDates: React.PropTypes.array,
@@ -32,21 +28,12 @@ var DateInput = React.createClass({
 
   getDefaultProps () {
     return {
-      dateFormat: 'L'
+      dateFormat: 'L',
+      disableDateAutoCorrection: false
     }
   },
 
   getInitialState () {
-    // ##################################################
-    // ##  START custom code in concur fork
-    if (this.props.allowInvalidDates && !this.props.date) {
-      return {
-        value: ''
-      }
-    }
-    // ##  END custom code in concur fork
-    // ##################################################
-
     return {
       value: this.safeDateFormat(this.props)
     }
@@ -55,52 +42,26 @@ var DateInput = React.createClass({
   componentWillReceiveProps (newProps) {
     if (!isSameDay(newProps.date, this.props.date) ||
         !isSameUtcOffset(newProps.date, this.props.date) ||
-          newProps.locale !== this.props.locale ||
-          newProps.dateFormat !== this.props.dateFormat) {
-      // ##################################################
-      // ##  START custom code in concur fork
-      this.updateState({
-        value: this.safeDateFormat(newProps)
-      })
-      // ##  END custom code in concur fork
-      // ##################################################
+        newProps.locale !== this.props.locale ||
+        newProps.dateFormat !== this.props.dateFormat) {
+      if (!this.props.disableDateAutoCorrection || (newProps.date && newProps.date.isValid())) {
+        this.setState({
+          value: this.safeDateFormat(newProps)
+        })
+      }
     }
   },
-
-  // ##################################################
-  // ##  START custom code in concur fork
-  updateState (obj) {
-    if (!this.props.allowInvalidDates) {
-      return this.setState({value: obj.value})
-    }
-
-    if (typeof obj.value !== 'undefined') {
-      this.setState({value: obj.value})
-    }
-  },
-  // ##  END custom code in concur fork
-  // ##################################################
 
   handleChange (event) {
-    // ##################################################
-    // ##  START custom code in concur fork
-    if (this.props.allowInvalidDates) {
-      this.updateState({value: event.target.value})
-    } else if (this.props.onChange) {
+    if (this.props.onChange) {
       this.props.onChange(event)
     }
-    // ##  END custom code in concur fork
-    // ##################################################
     if (this.props.onChangeRaw) {
       this.props.onChangeRaw(event)
     }
-    // ##################################################
-    // ##  START custom code in concur fork
-    if (event.isDefaultPrevented && !event.isDefaultPrevented()) {
+    if (!event.defaultPrevented) {
       this.handleChangeDate(event.target.value)
     }
-    // ##  END custom code in concur fork
-    // ##################################################
   },
 
   handleChangeDate (value) {
@@ -110,39 +71,26 @@ var DateInput = React.createClass({
         this.props.onChangeDate(date)
       } else if (value === '') {
         this.props.onChangeDate(null)
+      } else if (this.props.disableDateAutoCorrection && !date.isValid()) {
+        this.props.onChangeDate(null)
       }
     }
-    // ##################################################
-    // ##  START custom code in concur fork
-    this.updateState({value})
-    // ##  END custom code in concur fork
-    // ##################################################
+    this.setState({value})
   },
 
-  // ##################################################
-  // ##  START custom code in concur fork
-  safeDateFormat (props, value) {
-    if (this.props.allowInvalidDates) {
-      if (typeof props.date === 'string' || !props.date) {
-        return value
-      }
-    }
-    // ##  END custom code in concur fork
-    // ##################################################
-
+  safeDateFormat (props) {
     return props.date && props.date.clone()
       .locale(props.locale || moment.locale())
       .format(Array.isArray(props.dateFormat) ? props.dateFormat[0] : props.dateFormat) || ''
   },
 
   handleBlur (event) {
-    // ##################################################
-    // ##  START custom code in concur fork
-    this.updateState({
-      value: this.safeDateFormat(this.props)
-    })
-    // ##  END custom code in concur fork
-    // ##################################################
+    let val = this.safeDateFormat(this.props)
+    if (!this.props.disableDateAutoCorrection || val !== '') {
+      this.setState({
+        value: val
+      })
+    }
     if (this.props.onBlur) {
       this.props.onBlur(event)
     }
@@ -153,11 +101,7 @@ var DateInput = React.createClass({
   },
 
   render () {
-    // ##################################################
-    // ##  START custom code in concur fork
-    const { allowInvalidDates, customInput, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, onChangeRaw, ...rest } = this.props // eslint-disable-line no-unused-vars
-    // ##  END custom code in concur fork
-    // ##################################################
+    const { customInput, date, disableDateAutoCorrection, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, onChangeRaw, ...rest } = this.props // eslint-disable-line no-unused-vars
 
     if (customInput) {
       return React.cloneElement(customInput, {
