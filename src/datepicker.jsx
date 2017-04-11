@@ -11,6 +11,8 @@ import onClickOutside from 'react-onclickoutside'
 var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
 var WrappedCalendar = onClickOutside(Calendar)
 
+console.warn('WARNING: The "@concur/react-datepicker" component is planned for deprecation. Please migrate your code to use https://github.com/Hacker0x01/react-datepicker.')
+
 /**
  * General datepicker component.
  */
