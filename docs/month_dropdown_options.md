@@ -1,27 +1,8 @@
-`month_dropdown_options` (component)
-====================================
+# `month_dropdown_options` (component)
 
-
-
-Props
------
-
-### `month` (required)
-
-type: `number`
-
-
-### `monthNames` (required)
-
-type: `arrayOf[object Object]`
-
-
-### `onCancel` (required)
-
-type: `func`
-
-
-### `onChange` (required)
-
-type: `func`
-
+| name                    | type                     | default value | description |
+| ----------------------- | ------------------------ | ------------- | ----------- |
+| `month` (required)      | `number`                 |               |             |
+| `monthNames` (required) | `arrayOf[object Object]` |               |             |
+| `onCancel` (required)   | `func`                   |               |             |
+| `onChange` (required)   | `func`                   |               |             |

@@ -1,12 +1,6 @@
-`week_number` (component)
-=========================
+# `week_number` (component)
 
-
-
-Props
------
-
-### `weekNumber` (required)
-
-type: `number`
-
+| name                    | type     | default value | description |
+| ----------------------- | -------- | ------------- | ----------- |
+| `onClick`               | `func`   |               |             |
+| `weekNumber` (required) | `number` |               |             |

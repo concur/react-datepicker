@@ -1,297 +1,83 @@
-`datepicker` (component)
-========================
+# `datepicker` (component)
 
 General datepicker component.
 
-Props
------
-
-### `autoComplete`
-
-type: `string`
-
-
-### `autoFocus`
-
-type: `bool`
-
-
-### `calendarClassName`
-
-type: `string`
-
-
-### `children`
-
-type: `node`
-
-
-### `className`
-
-type: `string`
-
-
-### `customInput`
-
-type: `element`
-
-
-### `dateFormat`
-
-type: `union(string|array)`
-
-
-### `dateFormatCalendar`
-
-type: `string`
-defaultValue: `'MMMM YYYY'`
-
-
-### `disabled`
-
-type: `bool`
-defaultValue: `false`
-
-
-### `disabledKeyboardNavigation`
-
-type: `bool`
-defaultValue: `false`
-
-
-### `dropdownMode` (required)
-
-type: `enum('scroll'|'select')`
-defaultValue: `'scroll'`
-
-
-### `endDate`
-
-type: `object`
-
-
-### `excludeDates`
-
-type: `array`
-
-
-### `filterDate`
-
-type: `func`
-
-
-### `fixedHeight`
-
-type: `bool`
-
-
-### `forceShowMonthNavigation`
-
-type: `bool`
-
-
-### `highlightDates`
-
-type: `array`
-
-
-### `id`
-
-type: `string`
-
-
-### `includeDates`
-
-type: `array`
-
-
-### `inline`
-
-type: `bool`
-
-
-### `isClearable`
-
-type: `bool`
-
-
-### `locale`
-
-type: `string`
-
-
-### `maxDate`
-
-type: `object`
-
-
-### `minDate`
-
-type: `object`
-
-
-### `monthsShown`
-
-type: `number`
-defaultValue: `1`
-
-
-### `name`
-
-type: `string`
-
-
-### `onBlur`
-
-type: `func`
-defaultValue: `function() {}`
-
-
-### `onChange` (required)
-
-type: `func`
-defaultValue: `function() {}`
-
-
-### `onChangeRaw`
-
-type: `func`
-
-
-### `onFocus`
-
-type: `func`
-defaultValue: `function() {}`
-
-
-### `onMonthChange`
-
-type: `func`
-defaultValue: `function() {}`
-
-
-### `openToDate`
-
-type: `object`
-
-
-### `peekNextMonth`
-
-type: `bool`
-
-
-### `placeholderText`
-
-type: `string`
-
-
-### `popoverAttachment`
-
-type: `string`
-defaultValue: `'top left'`
-
-
-### `popoverTargetAttachment`
-
-type: `string`
-defaultValue: `'bottom left'`
-
-
-### `popoverTargetOffset`
-
-type: `string`
-defaultValue: `'10px 0'`
-
-
-### `readOnly`
-
-type: `bool`
-
-
-### `renderCalendarTo`
-
-type: `any`
-
-
-### `required`
-
-type: `bool`
-
-
-### `scrollableYearDropdown`
-
-type: `bool`
-
-
-### `selected`
-
-type: `object`
-
-
-### `selectsEnd`
-
-type: `bool`
-
-
-### `selectsStart`
-
-type: `bool`
-
-
-### `showMonthDropdown`
-
-type: `bool`
-
-
-### `showWeekNumbers`
-
-type: `bool`
-
-
-### `showYearDropdown`
-
-type: `bool`
-
-
-### `startDate`
-
-type: `object`
-
-
-### `tabIndex`
-
-type: `number`
-
-
-### `tetherConstraints`
-
-type: `array`
-defaultValue: `[
-  {
-    to: 'window',
-    attachment: 'together'
-  }
-]`
-
-
-### `title`
-
-type: `string`
-
-
-### `todayButton`
-
-type: `string`
-
-
-### `utcOffset`
-
-type: `number`
-defaultValue: `moment().utcOffset()`
-
-
-### `withPortal`
-
-type: `bool`
-defaultValue: `false`
-
+| name                         | type                           | default value   | description                                |
+| ---------------------------- | ------------------------------ | --------------- | ------------------------------------------ |
+| `allowSameDay`               | `bool`                         | `false`         |                                            |
+| `autoComplete`               | `string`                       |                 |                                            |
+| `autoFocus`                  | `bool`                         |                 |                                            |
+| `calendarClassName`          | `string`                       |                 |                                            |
+| `children`                   | `node`                         |                 |                                            |
+| `className`                  | `string`                       |                 |                                            |
+| `clearButtonTitle`           | `string`                       |                 |                                            |
+| `customInput`                | `element`                      |                 |                                            |
+| `customInputRef`             | `string`                       | `'ref'`         | The property used to pass the ref callback |
+| `dateFormat`                 | `union(string\|array)`         | `'L'`           |                                            |
+| `dateFormatCalendar`         | `string`                       | `'MMMM YYYY'`   |                                            |
+| `dayClassName`               | `func`                         |                 |                                            |
+| `disabled`                   | `bool`                         | `false`         |                                            |
+| `disabledKeyboardNavigation` | `bool`                         | `false`         |                                            |
+| `dropdownMode` (required)    | `enum('scroll'\|'select')`     | `'scroll'`      |                                            |
+| `endDate`                    | `object`                       |                 |                                            |
+| `excludeDates`               | `array`                        |                 |                                            |
+| `excludeTimes`               | `array`                        |                 |                                            |
+| `filterDate`                 | `func`                         |                 |                                            |
+| `fixedHeight`                | `bool`                         |                 |                                            |
+| `forceShowMonthNavigation`   | `bool`                         |                 |                                            |
+| `formatWeekNumber`           | `func`                         |                 |                                            |
+| `highlightDates`             | `array`                        |                 |                                            |
+| `id`                         | `string`                       |                 |                                            |
+| `includeDates`               | `array`                        |                 |                                            |
+| `includeTimes`               | `array`                        |                 |                                            |
+| `injectTimes`                | `array`                        |                 |                                            |
+| `inline`                     | `bool`                         |                 |                                            |
+| `isClearable`                | `bool`                         |                 |                                            |
+| `locale`                     | `string`                       |                 |                                            |
+| `maxDate`                    | `object`                       |                 |                                            |
+| `maxTime`                    | `object`                       |                 |                                            |
+| `minDate`                    | `object`                       |                 |                                            |
+| `minTime`                    | `object`                       |                 |                                            |
+| `monthsShown`                | `number`                       | `1`             |                                            |
+| `name`                       | `string`                       |                 |                                            |
+| `onBlur`                     | `func`                         | `function() {}` |                                            |
+| `onChange` (required)        | `func`                         | `function() {}` |                                            |
+| `onChangeRaw`                | `func`                         |                 |                                            |
+| `onClickOutside`             | `func`                         | `function() {}` |                                            |
+| `onFocus`                    | `func`                         | `function() {}` |                                            |
+| `onKeyDown`                  | `func`                         | `function() {}` |                                            |
+| `onMonthChange`              | `func`                         | `function() {}` |                                            |
+| `onYearChange`               | `func`                         | `function() {}` |                                            |
+| `onSelect`                   | `func`                         | `function() {}` |                                            |
+| `onWeekSelect`               | `func`                         |                 |                                            |
+| `openToDate`                 | `object`                       |                 |                                            |
+| `peekNextMonth`              | `bool`                         |                 |                                            |
+| `placeholderText`            | `string`                       |                 |                                            |
+| `popperClassName`            | `string`                       |                 |                                            |
+| `popperContainer`            | `func`                         |                 |                                            |
+| `popperModifiers`            | `object`                       |                 |                                            |
+| `popperPlacement`            | `enumpopperPlacementPositions` |                 |                                            |
+| `readOnly`                   | `bool`                         |                 |                                            |
+| `required`                   | `bool`                         |                 |                                            |
+| `scrollableYearDropdown`     | `bool`                         |                 |                                            |
+| `selected`                   | `object`                       |                 |                                            |
+| `selectsEnd`                 | `bool`                         |                 |                                            |
+| `selectsStart`               | `bool`                         |                 |                                            |
+| `shouldCloseOnSelect`        | `bool`                         | `true`          |                                            |
+| `showMonthDropdown`          | `bool`                         |                 |                                            |
+| `showTimeSelect`             | `bool`                         | `false`         |                                            |
+| `showWeekNumbers`            | `bool`                         |                 |                                            |
+| `showYearDropdown`           | `bool`                         |                 |                                            |
+| `startDate`                  | `object`                       |                 |                                            |
+| `startOpen`                  | `bool`                         |                 |                                            |
+| `tabIndex`                   | `number`                       |                 |                                            |
+| `timeFormat`                 | `string`                       |                 |                                            |
+| `timeIntervals`              | `number`                       | `30`            |                                            |
+| `title`                      | `string`                       |                 |                                            |
+| `todayButton`                | `string`                       |                 |                                            |
+| `useWeekdaysShort`           | `bool`                         |                 |                                            |
+| `utcOffset`                  | `number`                       |                 |                                            |
+| `value`                      | `string`                       |                 |                                            |
+| `weekLabel`                  | `string`                       |                 |                                            |
+| `withPortal`                 | `bool`                         | `false`         |                                            |
+| `yearDropdownItemNumber`     | `number`                       |                 |                                            |

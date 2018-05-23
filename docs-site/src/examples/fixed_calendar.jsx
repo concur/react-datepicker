@@ -1,37 +1,38 @@
-import React from 'react'
-import DatePicker from 'react-datepicker'
+import React from "react";
+import DatePicker from "react-datepicker";
 
-export default React.createClass({
-  displayName: 'FixedCalendar',
+export default class FixedCalendar extends React.Component {
+  state = {
+    startDate: null
+  };
 
-  getInitialState () {
-    return {
-      startDate: null
-    }
-  },
-
-  handleChange (date) {
+  handleChange = date => {
     this.setState({
       startDate: date
-    })
-  },
+    });
+  };
 
-  render () {
-    return <div className="row">
-      <pre className="column example__code">
-        <code className="jsx">
-          {'<DatePicker'}<br />
-              {'fixedHeight'}<br />
-              {'selected={this.state.startDate}'}<br />
-              {'onChange={this.handleChange} />'}
-        </code>
-      </pre>
-      <div className="column">
-        <DatePicker
+  render() {
+    return (
+      <div className="row">
+        <pre className="column example__code">
+          <code className="jsx">
+            {"<DatePicker"}
+            <br />
+            {"fixedHeight"}
+            <br />
+            {"selected={this.state.startDate}"}
+            <br />
+            {"onChange={this.handleChange} />"}
+          </code>
+        </pre>
+        <div className="column">
+          <DatePicker
             fixedHeight
             selected={this.state.startDate}
-            onChange={this.handleChange} />
+            onChange={this.handleChange}/>
+        </div>
       </div>
-    </div>
+    );
   }
-})
+}

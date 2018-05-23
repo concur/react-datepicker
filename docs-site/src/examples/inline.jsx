@@ -1,38 +1,44 @@
-import React from 'react'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
+import React from "react";
+import DatePicker from "react-datepicker";
+import moment from "moment";
 
-export default React.createClass({
-  displayName: 'Inline',
+export default class Inline extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState () {
-    return {
+    this.state = {
       startDate: moment()
-    }
-  },
+    };
+  }
 
-  handleChange (date) {
+  handleChange = date => {
     this.setState({
       startDate: date
-    })
-  },
+    });
+  };
 
-  render () {
-    return <div className="row">
-      <pre className="column example__code">
-        <code className="jsx">
-          {'<DatePicker'}<br />
-              {'inline'}<br />
-              {'selected={this.state.startDate}'}<br />
-              {'onChange={this.handleChange} />'}
-        </code>
-      </pre>
-      <div className="column">
-        <DatePicker
+  render() {
+    return (
+      <div className="row">
+        <pre className="column example__code">
+          <code className="jsx">
+            {`
+<DatePicker
+    inline
+    selected={this.state.startDate}
+    onChange={this.handleChange}
+/>
+`}
+          </code>
+        </pre>
+        <div className="column">
+          <DatePicker
             inline
             selected={this.state.startDate}
-            onChange={this.handleChange} />
+            onChange={this.handleChange}
+          />
+        </div>
       </div>
-    </div>
+    );
   }
-})
+}
